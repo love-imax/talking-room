@@ -1,0 +1,13 @@
+.talk{width: 550px;height: 100px;border:1px solid orangered}
+.room{width: 550px;height: 100px;list-style-type: none}
+.room li{ float: left;width:80px;height:50px;line-height: 50px;font-size: 20px;padding-left: 10px}
+.room li a{color:black;text-decoration: none}
+.content{margin:0 auto;border: 2px solid darkred;width: 400px;height: 500px;border-radius: 10px 10px;text-align: left;}
+#message,#messageArea{border: 1px solid darkred;  width: 400px;  height: 250px;  overflow-y: auto;  font-size: 14px;}
+#messageArea{height: 100px;width: 395px;margin-top: 10px}
+.but{margin-left: 100px}
+.but button{width:100px;height:30px;padding-right: 20px;color: darkred;font-weight: bold}
+#name{color:red;font-size: 20px}
+.son{font-size: 18px;color:red}
+.sun{font-size: 12px;color: black}
+.tip{font-size: 10px;color: gray}

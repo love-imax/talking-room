@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title><%=roomID%></title>
+    <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<div class="content">
+    昵称:<span id="name"></span><br/>
+    所在房间:<%=roomID%><br/>
+    当前用户人数:<span id="len">{{users.length}}</span><br/>
+    当前用户:<span id="user">{{users}}</span>
+    <div id="message">
+
+    </div>
+    <textarea id="messageArea"></textarea><br/>
+    <div class="but">
+    <button id="send">发送消息</button>
+    <button id="quit">退出聊天室</button>
+    </div>
+</div>
+
+
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/jquery.js"></script>
+<script>
+     $(function(){
+         var userName="";
+         while($('#name').text().trim()===''){
+             var userName=prompt("请先输入昵称：");
+             $('#name').text(userName)
+         };
+         var socket=io();
+         socket.on('connect',function(){
+             socket.emit('join',userName)
+         });
+         socket.on('msg',function(userName,msg){
+             var message='<div class="fa">'+
+                 '<span class="son">'+userName+':</span>'+
+                 '<span class="sun">'+msg+'</span>'+
+                 '</div>';
+             $('#message').append(message);
+
+         })
+         socket.on('sys',function(sysMsg,users){
+             var mes='<div class="tip">'+sysMsg+'</div>';
+             $('#message').append(mes);
+             $('#len').text(users.length);
+             $('#user').text(users)
+         })
+         $('#send').click(function(){
+             var mes=$('#messageArea').val();
+             $('#messageArea').val('');
+             socket.send(mes);
+         })
+         $('#quit').click(function(){
+             if($(this).text()==="退出聊天室"){
+                 $(this).text("进入聊天室");
+                 socket.emit('leave');
+                 var mes="你已经退出聊天室，要想进入请点击进入聊天室";
+                 $('#message').append('<div class="tip">'+mes+'</div>')
+             }else{
+                 $(this).text("退出聊天室")
+                 socket.emit('join',userName)
+             }
+         })
+     })
+</script>
+</body>
+</html>
